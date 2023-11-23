@@ -29,37 +29,50 @@ const fibRecur = (value) => {
 // console.log(fibRecur(8));
 
 //Asugnment 2
-let randomArray = [1, 2, 3, 4, 5, 6, 7, 8];
-function testArray(arr, first, last) {
-  let mid = Math.round((first + last) / 2);
-  if (first <= last) {
-    justprint(arr, first, last);
+let randomArray = [9, 1, 2, 7, 5, 3, 4, 8];
+function mergeSort(arr, low, high) {
+  // console.log(high);
+  if (low < high) {
+    let middle = Math.trunc((high + low) / 2);
 
-    return testArray(arr, first + 1, mid);
-  } else {
-    return arr[last];
+    mergeSort(arr, low, middle);
+    mergeSort(arr, middle + 1, high);
+    console.log(merge(arr, low, middle, high));
   }
 }
 
-function justprint(arr, first, last) {
-  console.log(
-    "Value at index " + first + ": " + arr[first] + "and the last index " + last
-  );
+function merge(arr, low, mid, high) {
+  let brr = [];
+  i = low;
+  j = mid + 1;
+  k = low;
+  while (i <= mid && j < high) {
+    if (arr[i] <= arr[j]) {
+      brr[k] = arr[i];
+      i++;
+      k++;
+    } else {
+      brr[k] = arr[j];
+      j++;
+      k++;
+    }
+  }
+
+  if (i > mid) {
+    while (j <= high) {
+      brr[k] = arr[j];
+      j++;
+      k++;
+    }
+  } else {
+    while (i <= mid) {
+      brr[k] = arr[i];
+      i++;
+      k++;
+    }
+  }
+
+  return brr;
 }
 
-console.log(testArray(randomArray, 0, randomArray.length - 1));
-
-// console.log(unsortedArray.length - 1);
-
-// function processArrayRecursively(arr, startIndex = 0) {
-//   // Base case: stop recursion when the index goes beyond the array length
-//   if (startIndex >= arr.length - 1) {
-//     return arr[startIndex];
-//   } else {
-//     return arr[startIndex] + processArrayRecursively(arr, startIndex + 1);
-//   }
-// }
-
-// // Example usage with an array
-// const myArray = [1, 2, 3, 4, 5];
-// console.log(processArrayRecursively(myArray));
+console.log(mergeSort(randomArray, 0, randomArray.length));
