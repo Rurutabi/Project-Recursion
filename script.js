@@ -29,50 +29,47 @@ const fibRecur = (value) => {
 // console.log(fibRecur(8));
 
 //Asugnment 2
-let randomArray = [9, 1, 2, 7, 5, 3, 4, 8];
+let randomArray = [2, 1, 9, 4, 15, 6, 7, 8];
+
 function mergeSort(arr, low, high) {
-  // console.log(high);
   if (low < high) {
     let middle = Math.trunc((high + low) / 2);
-
+    let tempArr = [];
     mergeSort(arr, low, middle);
     mergeSort(arr, middle + 1, high);
-    console.log(merge(arr, low, middle, high));
+    merge(arr, tempArr, low, middle, high);
   }
 }
 
-function merge(arr, low, mid, high) {
-  let brr = [];
+function merge(arr, tempArr, low, mid, high) {
   i = low;
   j = mid + 1;
   k = low;
-  while (i <= mid && j < high) {
+  while (i <= mid && j <= high) {
     if (arr[i] <= arr[j]) {
-      brr[k] = arr[i];
+      tempArr[k] = arr[i];
       i++;
-      k++;
     } else {
-      brr[k] = arr[j];
+      tempArr[k] = arr[j];
       j++;
-      k++;
     }
+    k++;
   }
 
-  if (i > mid) {
-    while (j <= high) {
-      brr[k] = arr[j];
-      j++;
-      k++;
-    }
-  } else {
-    while (i <= mid) {
-      brr[k] = arr[i];
-      i++;
-      k++;
-    }
+  for (; i <= mid; i++) {
+    tempArr[k] = arr[i];
+    k++;
   }
 
-  return brr;
+  for (; j <= high; j++) {
+    tempArr[k] = arr[j];
+    k++;
+  }
+
+  for (let p = low; p <= high; p++) {
+    arr[p] = tempArr[p];
+  }
 }
 
-console.log(mergeSort(randomArray, 0, randomArray.length));
+mergeSort(randomArray, 0, randomArray.length - 1);
+console.log(randomArray);
